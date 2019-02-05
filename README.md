@@ -1,5 +1,7 @@
 # OhMyLog
  
+[![Build Status](https://travis-ci.com/fabriziospadaro/oh_my_log.svg?branch=master)](https://travis-ci.com/fabriziospadaro/oh_my_log)[![Coverage Status](https://coveralls.io/repos/github/fabriziospadaro/oh_my_log/badge.svg?branch=master)](https://coveralls.io/github/fabriziospadaro/oh_my_log?branch=master)[![Maintainability](https://api.codeclimate.com/v1/badges/ace7cd003a0db8bffa5a/maintainability)](https://codeclimate.com/github/fabriziospadaro/oh_my_log/maintainability)
+
 ![N|Solid](https://i.ibb.co/WgCY6WX/oh-my-log-logo-256x270.png)
  
 ##### Oh my log is a powerful auditing system gem that tracks each changes on a model without being intrusive at all

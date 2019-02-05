@@ -13,4 +13,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.add_runtime_dependency("rails", ">= 4.0")
   s.add_runtime_dependency("rails-observers", "~> 0.1.5")
+  s.add_development_dependency 'coveralls'
+  s.add_development_dependency 'rubocop', '~> 0.59.2'
+  s.add_development_dependency 'bundler'
+
 end

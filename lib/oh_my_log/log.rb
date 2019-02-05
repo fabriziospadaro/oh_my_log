@@ -55,7 +55,7 @@ module OhMyLog
           end
         when "EXCEPT"
           selector.status_codes.values[0].each do |range|
-            return false if (range === status.to_i)
+            in_range = false if (range === status.to_i)
           end
         when "ALL"
           in_range = true
@@ -63,7 +63,7 @@ module OhMyLog
           raise "UNDEFINED RULE: please us any of [ONLY/EXCEPT/ALL]"
         end
         final_response = in_range
-        return false unless in_range
+        break false unless in_range
 
         permitted_controller = false
         case selector.controllers.keys[0]
@@ -77,7 +77,7 @@ module OhMyLog
           raise "UNDEFINED RULE: please us any of [ONLY/EXCEPT/ALL]"
         end
         final_response = final_response && permitted_controller
-        return false unless permitted_controller
+        break unless permitted_controller
 
         permitted_ip = false
         case selector.ips.keys[0]
@@ -91,7 +91,7 @@ module OhMyLog
           raise "UNDEFINED RULE: please us any of [ONLY/EXCEPT/ALL]"
         end
         final_response = final_response && permitted_ip
-        return false unless permitted_ip
+        break unless permitted_ip
         #finisci questo
         case selector.actions.keys[0]
         when "EXCEPT"
@@ -103,9 +103,9 @@ module OhMyLog
         else
           raise "UNDEFINED RULE: please us any of [ONLY/EXCEPT/ALL]"
         end
-        return false unless final_response
+        break unless  final_response
       end
-      return final_response
+      final_response
     end
 
     #once we processed an action we can get rid of all the cached data(targets) stored in the Log

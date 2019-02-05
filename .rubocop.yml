@@ -1,0 +1,73 @@
+AllCops:
+  TargetRubyVersion: 2.3
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+    - 'lib/tasks/**/*'
+  Exclude:
+    - Gemfile*
+    - README
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'bin/**/*'
+    - 'vendor/bundle/**/*'
+    - 'spec/support/**/*' # rspec support helpers have a strange api
+
+Rails:
+  Enabled: true
+
+# We don't care about method length, since we check method cyclomatic
+# complexity.
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Naming/FileName:
+  Exclude: ["oh_my_log.gemspec"]
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  SupportedStyles:
+    - nested
+    - compact
+
+Layout/TrailingBlankLines:
+  Description: 'Checks trailing blank lines and final newline.'
+  StyleGuide: '#newline-eof'
+  Enabled: false
+  EnforcedStyle: final_newline
+  SupportedStyles:
+    - final_newline
+    - final_blank_line
+
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+# Trailing commas make for clearer diffs because the last line won't appear
+# to have been changed, as it would if it lacked a comma and had one added.
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+# Cop supports --auto-correct.
+# Configuration parameters: PreferredDelimiters.
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    # Using `[]` for string arrays instead of `()`, since normal arrays are
+    # indicated with `[]` not `()`.
+    '%w': '[]'
+    '%W': '[]'
+
+Style/AndOr:
+  # Whether `and` and `or` are banned only in conditionals (conditionals)
+  # or completely (always).
+  # They read better, more like normal English.
+  Enabled: false
