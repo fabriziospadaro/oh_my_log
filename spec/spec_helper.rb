@@ -6,6 +6,9 @@ require 'dummy/config/environment'
 require 'rspec/rails'
 require 'oh_my_log'
 
+require 'coveralls'
+Coveralls.wear!
+
 ActiveRecord::Migration.verbose = false
 ActiveRecord::Base.logger = Logger.new(nil)
 
