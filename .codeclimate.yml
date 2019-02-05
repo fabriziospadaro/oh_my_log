@@ -48,6 +48,8 @@ plugins:
     enabled: true
   brakeman:
     enabled: true
+    config:
+      app_path: spec/dummy
 exclude_patterns:
   - "config/"
   - "db/"
