@@ -12,7 +12,7 @@ matrix:
   exclude:
     # Skip these combinations because they have incompatible dependencies
     # and will always fail.
-    - rvm: 2.6
+    - rvm: 2.6.0
       gemfile: gemfiles/rails_4.2_stable.gemfile
     - rvm: ruby-head
       gemfile: gemfiles/rails_4.2_stable.gemfile
@@ -21,8 +21,7 @@ matrix:
 #    - rvm: 2.4
 #      gemfile: gemfiles/rails_6.0_beta.gemfile
   allow_failures:
-    - rvm: 2.6.0
-      gemfile: gemfiles/rails_6.0_beta.gemfile
+#    - gemfile: gemfiles/rails_6.0_beta.gemfile
 #    - rvm: ruby-head
 gemfile:
   - gemfiles/rails_4.2_stable.gemfile
