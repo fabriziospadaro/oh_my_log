@@ -4,3 +4,4 @@ coverage/*
 spec/dummy/log/*
 spec/dummy/tmp/*
 .bundle
+Gemfile.lock
