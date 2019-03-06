@@ -1,4 +1,6 @@
 .idea/
 rdoc/
+vendor/
+gemfiles/.bundle/
 coverage/*
 spec/dummy/log/*

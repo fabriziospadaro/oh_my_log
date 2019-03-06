@@ -105,7 +105,7 @@ module OhMyLog
         end
         return false unless final_response
       end
-      return final_response
+      final_response
     end
 
     #once we processed an action we can get rid of all the cached data(targets) stored in the Log

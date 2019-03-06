@@ -19,6 +19,7 @@ gem 'oh_my_log', git: "https://bitbucket.org/thefoolsrl/oh_my_log"
 bundle exec rake oh_my_log:generate_initializer
 ```
 This rake task will generate a simple initializer that you can later change:
+
 ```sh
 OhMyLog::Log.configure do |config|
   OhMyLog::Log.configure do |config|
@@ -30,10 +31,13 @@ OhMyLog::Log.configure do |config|
   end
 end
 ```
+
 * 3- Generate Observers using the following rake task:
+
 ```sh
 bundle exec rake oh_my_log:generate_observers
 ```
+
  ---
 #### Configuration Class
 ###### Instance variables:
@@ -50,11 +54,18 @@ bundle exec rake oh_my_log:generate_observers
 #####
 >selectors Selector[] (instance list of all the selectors)
 #####
+
 ###### Instance methods:
+
 ####
->add_selector(selector ->Selector) (use this to add a new selector inside the configuration, you need to pass an instance of the Selector class)
+
+>add_selector(selector ->Selector) (use this to add a new selector inside the configuration,
+you need to pass an instance of the Selector class)
+
 ----
+
 #### Selector Class
+
 When using multiple selectors remember that if any of the conditions among all selectors fails the logger will not register
 ###### Instance variables:
 ####
@@ -76,10 +87,13 @@ When using multiple selectors remember that if any of the conditions among all s
 >set_status_codes (status_codes ->Hash{string =>Range[]})
 ###### Class methods:
 ###
+
 >universal_for(action: {"ALL" =>[]}, controllers: {"ALL" =>[]}) (inside the hash only or
 except you can put an array of actions)
+
 ###
 Complex initializer example:
+
 ```sh
 OhMyLog::Log.configure do |config|
   config.print_log = true
@@ -92,10 +106,12 @@ OhMyLog::Log.configure do |config|
   #put your configs here
 end
 ```
+
 ---
 #### OhMyLog::Log Module
+
 ###### Module variables:
-###
+
 >targets Model[] (list of all models affected by the current action)
 ####
 >configuration Configuration (configuration for the Log)
@@ -107,7 +123,9 @@ end
 ###
 >configure(&block) (use configure method to pass a configuration block)
 ####
+
 >clear (clear the history)
+
 ####
 >flush (get rid of all the cached data(targets) stored in the Log)
 ####
@@ -145,6 +163,7 @@ end
 
  
 ### Development 
+
 Developed by Fabrizio Spadaro 
 ### License:
 MIT

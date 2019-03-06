@@ -8,8 +8,17 @@ require 'oh_my_log'
 # require 'pry'
 # require 'pry-nav'
 
-require 'coveralls'
-Coveralls.wear!
+require 'simplecov'
+SimpleCov.start do
+  add_filter 'gemfiles'
+  add_group 'Tests', 'test'
+end
+
+if ENV['CI']
+  require 'coveralls'
+  SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+  Coveralls.wear!
+end
 
 ActiveRecord::Migration.verbose = false
 ActiveRecord::Base.logger = Logger.new(nil)
