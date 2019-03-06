@@ -1,3 +1,4 @@
 .idea/
+rdoc/
 coverage/*
 spec/dummy/log/*

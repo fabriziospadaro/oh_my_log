@@ -93,12 +93,20 @@ RSpec.describe FoosController, type: :controller do
       expect(oml.last_recorded).not_to eq(nil)
     end
     it "Should write a log when changing an Model" do
-      put :update, params: {name: "dummy name", value: 99, id: @dummy.id}
+      if Rails::VERSION::MAJOR >= 5
+        put :update, params: {name: "dummy name", value: 99, id: @dummy.id}
+      else
+        put :update, {name: "dummy name", value: 99, id: @dummy.id}
+      end
       expect(oml.last_recorded).not_to eq(nil)
     end
 
     it "The log created should have a receiver if the action made any changes to the model" do
-      put :update, params: {name: "not dummy name", value: 99, id: @dummy.id}
+      if Rails::VERSION::MAJOR >= 5
+        put :update, params: {name: "not dummy name", value: 99, id: @dummy.id}
+      else
+        put :update, {name: "not dummy name", value: 99, id: @dummy.id}
+      end
       expect(oml.last_recorded.effects[0].receiver).not_to eq(nil)
     end
 

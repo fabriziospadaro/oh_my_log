@@ -5,6 +5,8 @@ require 'dummy/config/environment'
 # https://stackoverflow.com/questions/14458122/framework-integration-testing-within-a-gem-how-to-set-up-rspec-controller-test
 require 'rspec/rails'
 require 'oh_my_log'
+# require 'pry'
+# require 'pry-nav'
 
 require 'coveralls'
 Coveralls.wear!
