@@ -1,6 +1,6 @@
 .idea/
-rdoc/
-vendor/
-gemfiles/.bundle/
+rdoc/*
 coverage/*
 spec/dummy/log/*
+spec/dummy/tmp/*
+.bundle
