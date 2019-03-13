@@ -62,8 +62,8 @@ module OhMyLog
     private
 
     def self.available_models_for(klass)
-      config_rule = Log.configuration.models.keys[0]
-      config_models = Log.configuration.models.values
+      config_rule = Log.configuration_rule
+      config_models = Log.configuration_models
       models = []
       if klass == ActiveRecord
         models = ActiveRecord::Base.subclasses.collect {|type| type.name}
