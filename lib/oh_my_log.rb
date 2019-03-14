@@ -15,6 +15,8 @@ end
 module OhMyLog
   #call this after you configured the Log Module
   def self.start
+    Railtie.start_oh_my_log
+
     #the main loop to get callbacks from controllers
     ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
       data = args[-1]
@@ -31,6 +33,13 @@ module OhMyLog
     FileUtils.cp_r(File.expand_path(__dir__ + '/../blue_print/oh_my_log_initializer.rb'), Rails.root + "config/initializers")
     p "Successfully created initializer!"
   end
+
+  def self.destroy_initializer
+    path = Rails.root + "config/initializers/oh_my_log_initializer.rb"
+    File.delete(path) if File.exist?(path)
+    p "Successfully destroyed the initializer!"
+  end
+
 end
 
 #load the script to inject code to rails source and create rake task

@@ -3,19 +3,12 @@ require 'rails_helper'
 RSpec.describe FoosController, type: :controller do
   let(:oml) {OhMyLog::Log}
 
-  context "After installing the gem" do
-    it "Should create an initializer" do
-      expect(File.file?(Rails.root + "config/initializers/oh_my_log_initializer.rb")).to eq(true)
-    end
-    it "Should create the folder observers/oh_my_log inside the model folder" do
-      expect(File.directory?(Rails.root + "app/models/observers/oh_my_log")).to eq(true)
-    end
-  end
-
   context "#When using a custom configuration for the Logger" do
     before(:all) do
+      Rake::Task['oh_my_log:install'].invoke
       Foo.destroy_all
       Doo.destroy_all
+      OhMyLog.start
     end
     #reset the configuration to the default state
     before(:each) do
@@ -26,6 +19,11 @@ RSpec.describe FoosController, type: :controller do
         config.add_selector(selector)
       end
     end
+
+    after(:all) do
+      Rake::Task['oh_my_log:clean'].invoke
+    end
+
     it "Should not log anything when the response is 200 and we put 200 in the status_codes blacklist" do
       oml.configuration.selectors[-1].set_status_codes("EXCEPT" => [(200..204)])
       put :create, params: {name: 'foo name'}

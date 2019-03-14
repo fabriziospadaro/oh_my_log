@@ -23,6 +23,10 @@ module OhMyLog
       generate_collection_for(Mongoid) if defined?(Mongoid)
     end
 
+    def self.remove_collection
+      FileUtils.rm_rf(Rails.root + "app/models/observers/oh_my_log") if File.directory?(Rails.root + "app/models/observers/oh_my_log")
+    end
+
     private
 
     def self.build_activerecord_obs

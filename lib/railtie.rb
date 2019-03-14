@@ -11,21 +11,7 @@ class Railtie < ::Rails::Railtie
 
   #now let's start our gem(only if there is an initializer) after the rails initialize process
   config.after_initialize do
-    #we are after the rails initialization time to load our file
-    if defined?(Mongoid)
-      require 'mongoid-observers'
-      require_relative "oh_my_log/mongoid_observer"
-    end
-    unless File.file?(Rails.root + "config/initializers/oh_my_log_initializer.rb")
-      #ok we create the initializer but we still need to execute it
-      ::OhMyLog::generate_initializer
-      #let's execute him now
-      require Rails.root + "config/initializers/oh_my_log_initializer.rb"
-      ::OhMyLog::ObserverFactory::generate_collection
-    end
-    ::OhMyLog::ObserverFactory.activate_observers
-    ::OhMyLog.start
-
+    load Rails.root + "app/controllers/application_controller.rb"
     class ::ApplicationController
       before_action :get__session__info
 
@@ -39,6 +25,19 @@ class Railtie < ::Rails::Railtie
         Thread.current[:user] = user
         Thread.current[:remote_ip] = request.remote_ip
       end
+    end
+  end
+
+  def self.start_oh_my_log
+    if defined?(Mongoid)
+      require 'mongoid-observers'
+      require_relative "oh_my_log/mongoid_observer"
+    end
+    begin
+      require Rails.root + "config/initializers/oh_my_log_initializer.rb"
+      ::OhMyLog::ObserverFactory.activate_observers
+    rescue
+      return "could not start the gem, did you run oh_my_log:install ?"
     end
   end
 
