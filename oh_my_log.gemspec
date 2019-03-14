@@ -23,14 +23,14 @@ Gem::Specification.new do |s|
   else
     s.add_runtime_dependency 'railties', '>= 4.2.0', '< 6.0'
   end
-  s.add_runtime_dependency 'json', '~> 0'
+  s.add_runtime_dependency 'json'
   s.add_runtime_dependency("rails-observers", "~> 0.1.5")
-  s.add_development_dependency 'coveralls', '~> 0'
+  s.add_development_dependency 'coveralls'
   s.add_development_dependency 'rubocop', '~> 0.59.2'
-  s.add_development_dependency 'bundler', '~> 0'
-  s.add_development_dependency 'appraisal', '~> 0'
+  s.add_development_dependency 'bundler'
+  s.add_development_dependency 'appraisal'
   s.add_development_dependency 'sqlite3', '1.3.10'
-  s.add_development_dependency 'rspec-core', '~> 0'
-  s.add_development_dependency 'wwtd', '~> 0'
-  s.add_development_dependency 'rspec-rails', '~> 0'
+  s.add_development_dependency 'rspec-core'
+  s.add_development_dependency 'wwtd'
+  s.add_development_dependency 'rspec-rails'
 end
