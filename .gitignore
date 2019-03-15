@@ -6,3 +6,5 @@ spec/dummy/tmp/*
 .bundle
 Gemfile.lock
 vendor/
+*.lock
+doc/

@@ -1,6 +1,6 @@
 module OhMyLog
   module Log
-#the request is what the user is trying to do
+    #the request is what the user is trying to do
     class Request
       attr_reader :sender, :date, :params, :method, :status
 

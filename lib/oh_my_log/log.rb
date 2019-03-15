@@ -113,6 +113,7 @@ module OhMyLog
       return permitted_action
     end
 
+    #TODO: implement filtering by method
     def self.loggable?(params, status, method)
       ctrl_name = params["controller"]
       ctrl_action = params["action"].to_sym

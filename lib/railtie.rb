@@ -28,19 +28,6 @@ class Railtie < ::Rails::Railtie
     end
   end
 
-  def self.start_oh_my_log
-    if defined?(Mongoid)
-      require 'mongoid-observers'
-      require_relative "oh_my_log/mongoid_observer"
-    end
-    begin
-      require Rails.root + "config/initializers/oh_my_log_initializer.rb"
-      ::OhMyLog::ObserverFactory.activate_observers
-    rescue
-      return "could not start the gem, did you run oh_my_log:install ?"
-    end
-  end
-
   #time to add some tasks
   rake_tasks do
     load 'tasks/oh_my_log.rake'

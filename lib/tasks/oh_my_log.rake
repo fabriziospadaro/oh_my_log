@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'rake'
 
 namespace :oh_my_log do
   desc 'Generate the observers for each ActiveRecord model'
@@ -16,11 +17,11 @@ namespace :oh_my_log do
 
   desc 'Install the gem by building initializer and observers'
   task install: :environment do
-    OhMyLog.generate_initializer
+    Rake::Task['oh_my_log:generate_initializer'].invoke
     p "generated initializer"
     sleep(1)
     require Rails.root + "config/initializers/oh_my_log_initializer.rb"
-    OhMyLog::ObserverFactory.generate_collection
+    Rake::Task['oh_my_log:generate_observers'].invoke
     p "generated collections"
   end
 

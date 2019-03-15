@@ -15,8 +15,7 @@ end
 module OhMyLog
   #call this after you configured the Log Module
   def self.start
-    Railtie.start_oh_my_log
-
+    activate
     #the main loop to get callbacks from controllers
     ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
       data = args[-1]
@@ -26,6 +25,19 @@ module OhMyLog
         result.record!
       end
       Log::flush
+    end
+  end
+
+  def self.activate
+    if defined?(Mongoid)
+      require 'mongoid-observers'
+      require_relative "oh_my_log/mongoid_observer"
+    end
+    begin
+      require Rails.root + "config/initializers/oh_my_log_initializer.rb"
+      ::OhMyLog::ObserverFactory.activate_observers
+    rescue
+      return "could not start the gem, did you run oh_my_log:install ?"
     end
   end
 

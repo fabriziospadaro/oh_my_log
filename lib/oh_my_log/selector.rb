@@ -1,13 +1,13 @@
 module OhMyLog
   module Log
-#Selector is a set of rule that Log.loggable? will have to respect
+    #Selector is a set of rule that Log.loggable? will have to respect
     class Selector
       attr_reader :controllers, :actions, :status_codes, :ips
       METHODS = ["GET", "HEAD", "POST", "PATCH", "PUT", "DELETE"].freeze
       ACTIONS = ["ONLY", "EXCEPT", "ALL"].freeze
-      # add methods in the same style as anythingelse
+      # TODO: add methods in the same style as anything else
       # and it will affect the parameter method in the loggable function in LOG.rb
-      ##EXCEPT O ONLY
+      # EXCEPT O ONLY
       def initialize(controllers: default_hash_setting, actions: default_hash_setting, ips: default_hash_setting, status_codes: default_hash_setting)
         @controllers = controllers
         @actions = actions

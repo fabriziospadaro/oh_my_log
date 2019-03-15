@@ -11,7 +11,7 @@ module OhMyLog
       end
 
       def to_s
-        return "#{@receiver.class.to_s}[#{@receiver.id}] => #{@changes}"
+        "#{@receiver.class.to_s}[#{@receiver.id}] => #{@changes}"
       end
     end
   end

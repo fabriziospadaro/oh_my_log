@@ -2,6 +2,10 @@ ENV['RAILS_ENV'] ||= 'test'
 require 'simplecov'
 SimpleCov.start do
   add_filter 'gemfiles'
+  add_filter 'lib/railtie.rb'
+  add_filter 'lib/tasks/oh_my_log.rake'
+  add_filter 'spec'
+  add_filter 'blue_print'
   add_group 'Tests', 'test'
 end
 

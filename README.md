@@ -13,13 +13,13 @@ ___
 * 1- Include this gem in your gemfile:
 
 ```sh
-gem 'oh_my_log', git: "https://bitbucket.org/thefoolsrl/oh_my_log"
+gem 'oh_my_log'
 ```
 
-* 2- Generate the initializer with the following rake task:
+* 2- Install the gem following rake task:
 
 ```sh
-bundle exec rake oh_my_log:generate_initializer
+bundle exec rake oh_my_log:install
 ```
 
 This rake task will generate a simple initializer that you can later change:
@@ -31,12 +31,17 @@ OhMyLog::Log.configure do |config|
     selector = OhMyLog::Log::Selector.universal_for(actions: {"EXCEPT" =>["index"]})
     #selector.set_status_codes("ONLY" =>[(0..200)])
     config.add_selector(selector)
+    OhMyLog.start if File.directory?(Rails.root + "app/models/observers/oh_my_log")
     #put your configs here
   end
 end
 ```
 
-* 3- Generate Observers using the following rake task:
+and a collection of observes based on the first initializer configuration that you can find under app/models/observers/oh_my_log.
+
+If you made any changes to the initializer you can REBUILD the observers list using the following task.
+
+**This will destroy all the files inside app/models/observers/oh_my_log and recreate them**
 
 ```sh
 bundle exec rake oh_my_log:generate_observers
