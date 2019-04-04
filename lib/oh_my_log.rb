@@ -5,6 +5,10 @@ module ActiveRecord
 end
 
 #load the gem's lib folder
+Dir[File.dirname(__FILE__) + '/oh_my_log/syslog_processors/*.rb'].each do |file|
+  name = File.basename(file, File.extname(file))
+  require_relative "oh_my_log/syslog_processors/#{name}"
+end
 Dir[File.dirname(__FILE__) + '/oh_my_log/*.rb'].each do |file|
   name = File.basename(file, File.extname(file))
   #we are gonna skip this file FOR NOW since it depends of gem loaded after the rails initializer

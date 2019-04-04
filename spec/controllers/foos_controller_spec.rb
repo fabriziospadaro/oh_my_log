@@ -17,7 +17,8 @@ RSpec.describe FoosController, type: :controller do
         config.print_log = true
         selector = oml::Selector.universal_for(actions: {"EXCEPT" => ["index"]})
         config.add_selector(selector)
-        syslog = OhMyLog::Syslog.new(hostname: "Staging", priority: 101, tag: "BRAINT")
+        OhMyLog::SyslogConfiguration.use("RFC3164")
+        syslog = OhMyLog::SyslogImplementor.new(hostname: "Staging", priority: 101, tag: "BRAINT")
         config.syslog = syslog
       end
     end
@@ -83,7 +84,8 @@ RSpec.describe FoosController, type: :controller do
         config.print_log = true
         selector = oml::Selector.universal_for(actions: {"EXCEPT" => ["index"]})
         config.add_selector(selector)
-        syslog = OhMyLog::Syslog.new(hostname: "Staging", priority: 101, tag: "BRAINT")
+        OhMyLog::SyslogConfiguration.use("RFC3164")
+        syslog = OhMyLog::SyslogImplementor.new(hostname: "Staging", priority: 101, tag: "BRAINT")
         config.syslog = syslog
       end
     end
