@@ -2,7 +2,7 @@ module OhMyLog
   module Log
     #the request is what the user is trying to do
     class Request
-      attr_reader :sender, :date, :params, :method, :status
+      attr_reader :sender, :date, :params, :method, :status, :path
 
       def initialize(args)
         @sender = args[:sender]
@@ -10,6 +10,7 @@ module OhMyLog
         @params = args[:params]
         @method = args[:method]
         @status = args[:status]
+        @path = args[:path]
       end
 
       def to_s

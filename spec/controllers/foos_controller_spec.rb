@@ -17,6 +17,8 @@ RSpec.describe FoosController, type: :controller do
         config.print_log = true
         selector = oml::Selector.universal_for(actions: {"EXCEPT" => ["index"]})
         config.add_selector(selector)
+        syslog = OhMyLog::Syslog.new(hostname: "Staging", priority: 101, tag: "BRAINT")
+        config.syslog = syslog
       end
     end
 
@@ -81,6 +83,8 @@ RSpec.describe FoosController, type: :controller do
         config.print_log = true
         selector = oml::Selector.universal_for(actions: {"EXCEPT" => ["index"]})
         config.add_selector(selector)
+        syslog = OhMyLog::Syslog.new(hostname: "Staging", priority: 101, tag: "BRAINT")
+        config.syslog = syslog
       end
     end
     it "Should create a log in the path specified in teh configuration" do

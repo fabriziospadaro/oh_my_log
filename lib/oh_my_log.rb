@@ -20,7 +20,7 @@ module OhMyLog
     ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
       data = args[-1]
       if Log::loggable?(data[:params], data[:status], data[:method])
-        request = Log::Request.new(sender: Thread.current[:user], date: Time.now.utc, params: data[:params], method: data[:method], status: data[:status])
+        request = Log::Request.new(sender: Thread.current[:user], date: Time.now.utc, params: data[:params], method: data[:method], status: data[:status], path: data[:path])
         result = Log::Result.new(request)
         result.record!
       end

@@ -1,7 +1,7 @@
 module OhMyLog
   module Log
     class Configuration
-      attr_accessor :models, :print_log, :record_history, :log_instance, :log_path
+      attr_accessor :models, :print_log, :record_history, :log_instance, :log_path, :syslog
       attr_reader :selectors
 
       def initialize(*args)
@@ -11,6 +11,7 @@ module OhMyLog
         @print_log = true
         @log_instance = Logger.new(File.join(Rails.root, 'log/oh_my_log.log'))
         @log_path = nil
+        @syslog = nil
         #do we wanna keep track of all the actions?
         @record_history = false
       end
