@@ -4,6 +4,8 @@ require 'oh_my_log'
 
 if defined?(Bundler)
   Bundler.require(*Rails.groups(assets: %w[development test]))
+  Bundler.require :default, OHMYLOG_ORM
+  require "#{OHMYLOG_ORM}/railtie"
 end
 
 module RailsApp
@@ -12,6 +14,8 @@ module RailsApp
 
     config.filter_parameters += [:password]
 
+    config.autoload_paths += ["#{config.root}/app/#{OHMYLOG_ORM}"]
+    config.autoload_paths += ["#{config.root}/lib"]
     config.assets.enabled = true
 
     config.assets.version = '1.0'

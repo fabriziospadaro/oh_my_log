@@ -1,19 +1,14 @@
-require 'rails/observers/activerecord/base'
-#force LOAD the gem "rails-observers"
-module ActiveRecord
-  autoload :Observer, 'rails/observers/activerecord/observer'
-end
-
+require 'rails'
+#creare una classe depency loader e usare il preload e l'after load
+require_relative "oh_my_log/orm/#{OHMYLOG_ORM rescue "active_record"}"
 #load the gem's lib folder
-Dir[File.dirname(__FILE__) + '/oh_my_log/syslog_processors/*.rb'].each do |file|
-  name = File.basename(file, File.extname(file))
-  require_relative "oh_my_log/syslog_processors/#{name}"
-end
-Dir[File.dirname(__FILE__) + '/oh_my_log/*.rb'].each do |file|
-  name = File.basename(file, File.extname(file))
-  #we are gonna skip this file FOR NOW since it depends of gem loaded after the rails initializer
-  next if name == "mongoid_observer"
-  require_relative "oh_my_log/" + name
+sources = ["oh_my_log/syslog_processors/", "oh_my_log/"]
+sources.each do |base_path|
+  Dir[File.dirname(__FILE__) + "/#{base_path}*.rb"].each do |file|
+    name = File.basename(file, File.extname(file))
+    next if (["mongoid_observer", "active_record_observer"]).include? name
+    require_relative base_path + name
+  end
 end
 
 module OhMyLog
@@ -33,10 +28,6 @@ module OhMyLog
   end
 
   def self.activate
-    if defined?(Mongoid)
-      require 'mongoid-observers'
-      require_relative "oh_my_log/mongoid_observer"
-    end
     begin
       require Rails.root + "config/initializers/oh_my_log_initializer.rb"
       ::OhMyLog::ObserverFactory.activate_observers
@@ -60,4 +51,3 @@ end
 
 #load the script to inject code to rails source and create rake task
 require_relative "railtie"
-

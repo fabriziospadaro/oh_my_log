@@ -19,8 +19,7 @@ module OhMyLog
       #rebuild folder if it's already there
       FileUtils.rm_rf(Rails.root + "app/models/observers/oh_my_log") if File.directory?(Rails.root + "app/models/observers/oh_my_log")
       FileUtils.mkdir_p(Rails.root + "app/models/observers/oh_my_log")
-      generate_collection_for(ActiveRecord) if defined?(ActiveRecord)
-      generate_collection_for(Mongoid) if defined?(Mongoid)
+      generate_collection_for(OHMYLOG_ORM.to_s.classify.constantize)
     end
 
     def self.remove_collection
@@ -69,10 +68,10 @@ module OhMyLog
       config_rule = Log.configuration_rule
       config_models = Log.configuration_models
       models = []
-      if klass == ActiveRecord
+      if klass.to_s == 'ActiveRecord'
         models = ActiveRecord::Base.subclasses.collect {|type| type.name}
         models = models + ApplicationRecord.subclasses.collect {|type| type.name} if defined?(ApplicationRecord)
-      elsif klass == Mongoid
+      elsif klass.to_s == 'Mongoid'
         models = Mongoid.models.collect {|type| type.name}
       end
       #reject modules
