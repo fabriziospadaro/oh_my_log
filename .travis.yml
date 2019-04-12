@@ -10,7 +10,7 @@ rvm:
   - ruby-head
 env:
   matrix:
-    #- OHMYLOG_ORM=active_record
+    - OHMYLOG_ORM=active_record
     - OHMYLOG_ORM=mongoid
 matrix:
   exclude:
