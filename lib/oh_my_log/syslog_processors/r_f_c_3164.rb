@@ -21,7 +21,7 @@ module SyslogProcessors
 
     def header_text(request_time)
       #request_time.to_time. + " #{@hostname}"
-      request_time.strftime("%b %-d %H:%M:%S") + " #{@hostname}"
+      request_time.strftime("%b %-d %H:%M:%S") + " #{@public_ip || @hostname || "FAK"}"
     end
 
     def print(params)
