@@ -1,17 +1,7 @@
-module OhMyLog
-  class Syslog
-    attr_accessor :facility, :severity
-
-    def initialize(hostname: nil, priority: nil, facility: nil, severity: nil, tag: nil)
-      @hostname = hostname
-      @priority = priority
-      @facility = facility
-      @severity = severity
-      @tag = tag
-    end
-
+module SyslogProcessors
+  module RFC3164
     def calculate_priority
-      Syslog.calculate_priority(facility: @facility, severity: @severity)
+      self.class.calculate_priority(facility: @facility, severity: @severity)
     end
 
     def priority_text
@@ -30,7 +20,8 @@ module OhMyLog
     end
 
     def header_text(request_time)
-      request_time.to_time.iso8601 + " #{@hostname}"
+      #request_time.to_time. + " #{@hostname}"
+      request_time.strftime("%b %-d %H:%M:%S") + " #{@public_ip || @hostname || "FAK"}"
     end
 
     def print(params)
