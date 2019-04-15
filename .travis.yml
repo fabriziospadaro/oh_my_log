@@ -8,6 +8,10 @@ rvm:
   - 2.5.0
   - 2.6.0
   - ruby-head
+env:
+  matrix:
+    - OHMYLOG_ORM=active_record
+    - OHMYLOG_ORM=mongoid
 matrix:
   exclude:
     # Skip these combinations because they have incompatible dependencies
@@ -16,10 +20,10 @@ matrix:
       gemfile: gemfiles/rails_4.2_stable.gemfile
     - rvm: ruby-head
       gemfile: gemfiles/rails_4.2_stable.gemfile
-#    - rvm: 2.3
-#      gemfile: gemfiles/rails_6.0_beta.gemfile
-#    - rvm: 2.4
-#      gemfile: gemfiles/rails_6.0_beta.gemfile
+  #    - rvm: 2.3
+  #      gemfile: gemfiles/rails_6.0_beta.gemfile
+  #    - rvm: 2.4
+  #      gemfile: gemfiles/rails_6.0_beta.gemfile
   allow_failures:
 #    - gemfile: gemfiles/rails_6.0_beta.gemfile
 #    - rvm: ruby-head
