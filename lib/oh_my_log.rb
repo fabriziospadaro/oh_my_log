@@ -1,7 +1,7 @@
 require 'rails'
-OHMYLOG_ORM rescue OHMYLOG_ORM = 'active_record'
+OHMYLOG_ORM rescue OHMYLOG_ORM = :active_record
 #creare una classe depency loader e usare il preload e l'after load
-require_relative "oh_my_log/orm/#{OHMYLOG_ORM}"
+require_relative "oh_my_log/orm/#{OHMYLOG_ORM.to_s}"
 #load the gem's lib folder
 sources = ["oh_my_log/syslog_processors/", "oh_my_log/"]
 sources.each do |base_path|

@@ -26,7 +26,6 @@ module OhMyLog
       self.history = []
       yield(configuration)
       self.configuration.add_selector(Selector.universal_for) if self.configuration.selectors.empty?
-      self.configuration.process_path
     end
 
     def self.clear

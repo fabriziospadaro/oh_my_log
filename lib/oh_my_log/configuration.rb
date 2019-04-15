@@ -1,15 +1,15 @@
 module OhMyLog
   module Log
     class Configuration
-      attr_accessor :models, :print_log, :record_history, :log_instance, :log_path, :syslog
-      attr_reader :selectors
+      attr_accessor :models, :print_log, :record_history, :log_instance, :syslog
+      attr_reader :selectors, :log_path
 
       def initialize(*args)
         @selectors = []
         #models not to track
         @models = {"ALL" => []}
         @print_log = true
-        @log_instance = Logger.new(File.join(Rails.root, 'log/oh_my_log.log'))
+        @log_instance = Logger.new(File.join(Rails.root, 'log/oh_my_log.log')) unless @log_path
         @log_path = nil
         @syslog = nil
         #do we wanna keep track of all the actions?
@@ -22,6 +22,11 @@ module OhMyLog
 
       def reset_selectors
         @selectors = []
+      end
+
+      def log_path=(path)
+        @log_path = path
+        process_path
       end
 
       def get_actions(controller)
