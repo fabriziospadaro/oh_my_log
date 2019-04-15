@@ -18,8 +18,8 @@ if ENV['CI']
 end
 require 'active_support/all'
 require 'rails'
-require_relative "../spec/orm/#{OHMYLOG_ORM}"
 require 'dummy/config/environment'
+require_relative "../spec/orm/#{OHMYLOG_ORM}"
 # note that require 'rspec-rails' does not work
 # https://stackoverflow.com/questions/14458122/framework-integration-testing-within-a-gem-how-to-set-up-rspec-controller-test
 require 'rspec/rails'
