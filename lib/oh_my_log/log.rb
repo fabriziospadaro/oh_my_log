@@ -113,19 +113,38 @@ module OhMyLog
       return permitted_action
     end
 
+    def self.permitted_method?(selector, ctrl_method)
+      permitted_method = true
+      case selector.methods.keys[0]
+      when "EXCEPT"
+        selector.methods.values[0].each {|method| permitted_method = false if method.upcase.to_sym == ctrl_method}
+      when "ONLY"
+        selector.methods.values[0].each {|method| permitted_method = true if method.upcase.to_sym == ctrl_method}
+      when "ALL"
+        permitted_method = true
+      else
+        raise "UNDEFINED RULE: please us any of [ONLY/EXCEPT/ALL]"
+      end
+      return permitted_method
+    end
+
     #TODO: implement filtering by method
     def self.loggable?(params, status, method)
       ctrl_name = params["controller"]
       ctrl_action = params["action"].to_sym
+      ctrl_method = method.to_sym
       final_response = false
       self.configuration.selectors.each do |selector|
         final_response = permitted_range?(selector, status)
         return false unless final_response
 
-        final_response = final_response && permitted_controller?(selector, ctrl_name)
+        final_response &= permitted_method?(selector, ctrl_method)
         return false unless final_response
 
-        final_response = final_response && permitted_ip?(selector, Thread.current[:remote_ip])
+        final_response &= permitted_controller?(selector, ctrl_name)
+        return false unless final_response
+
+        final_response &= permitted_ip?(selector, Thread.current[:remote_ip])
         return false unless final_response
 
         return false unless permitted_action?(selector, ctrl_action)
