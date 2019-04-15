@@ -1,5 +1,7 @@
 require 'rails'
 OHMYLOG_ORM rescue OHMYLOG_ORM = :active_record
+Bundler.require :default, OHMYLOG_ORM
+require "#{OHMYLOG_ORM}/railtie"
 #creare una classe depency loader e usare il preload e l'after load
 require_relative "oh_my_log/orm/#{OHMYLOG_ORM.to_s}"
 #load the gem's lib folder
@@ -11,6 +13,7 @@ sources.each do |base_path|
     require_relative base_path + name
   end
 end
+
 
 module OhMyLog
   #call this after you configured the Log Module
