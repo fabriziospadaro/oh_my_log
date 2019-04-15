@@ -1,5 +1,10 @@
 language: ruby
 before_install: gem install bundler -v '1.17.3'
+before_script:
+  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz -O /tmp/mongodb.tgz
+  - tar -xvf /tmp/mongodb.tgz
+  - mkdir /tmp/data
+  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath /tmp/data --bind_ip 127.0.0.1 --auth &> /dev/null &
 install: bundle _1.17.3_ install --jobs=3 --retry=3
 script: bundle exec rspec
 rvm:
@@ -9,6 +14,9 @@ rvm:
   - 2.6.0
   - ruby-head
 env:
+  global:
+    - CI="travis"
+    - MONGODB=4.0.1
   matrix:
     - OHMYLOG_ORM=active_record
     - OHMYLOG_ORM=mongoid
