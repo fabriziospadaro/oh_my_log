@@ -6,6 +6,8 @@ SimpleCov.start do
   add_filter 'gemfiles'
   add_filter 'lib/railtie.rb'
   add_filter 'lib/tasks/oh_my_log.rake'
+  add_filter 'lib/oh_my_log/orm'
+  add_filter 'lib/oh_my_log/syslog_processors'
   add_filter 'spec'
   add_filter 'blue_print'
   add_group 'Tests', 'test'

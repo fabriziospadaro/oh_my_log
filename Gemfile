@@ -7,6 +7,6 @@ group :active_record do
 end
 
 group :mongoid do
-  gem 'mongoid'
+  gem 'mongoid', ">= 3.0"
   gem "mongoid-observers"
 end
