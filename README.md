@@ -85,6 +85,8 @@ When using multiple selectors remember that if any of the conditions among all s
 
 >[read only] status_codes Hash(the key is the rule: ONLY/EXCEPT/ALL the value is an array of status codes)
 
+>[read only] methods Hash(the key is the rule: ONLY/EXCEPT/ALL the value is an array of methods)
+
 ###### Instance methods:
 
 >set_controllers (controller ->Hash{string =>string[]})
@@ -95,10 +97,11 @@ When using multiple selectors remember that if any of the conditions among all s
 
 >set_status_codes (status_codes ->Hash{string =>Range[]})
 
+>set_methods (methods ->Hash{string =>string[]})
+
 ###### Class methods:
 
->universal_for(action: {"ALL" =>[]}, controllers: {"ALL" =>[]}) (inside the hash only or
-except you can put an array of actions)
+>universal_for(action: {"ALL" =>[]}, controllers: {"ALL" =>[]}, methods: {"ALL" =>[]}) 
 
 Complex initializer example:
 
@@ -109,6 +112,7 @@ OhMyLog::Log.configure do |config|
   selector.set_controllers("EXCEPT" =>["ApplicationController"])
   selector.set_actions("ONLY" =>["index","create","destroy"])
   selector.set_status_codes("ONLY" =>[(0..200)])
+  selector.set_methods("EXCEPT" =>["GET"])
   selector.set_ips("EXCEPT"=>["192.168.0.1"])
   config.add_selector(selector)
   #put your configs here
@@ -174,6 +178,25 @@ end
 >changes string (changes that this model had before and after the action)
 
 ---
+
+#### OhMyLog::SyslogConfiguration
+
+###### Class methods:
+
+>processor_name string (the name of the processor in use) 
+
+>use (processor_name)  (the name of the processor to be used) 
+
+---
+ 
+ ### How to configure a syslog ready log:
+ * Include this in the config proc of the initializer:
+ 
+ ```sh
+ OhMyLog::SyslogConfiguration.use("RFC3164")
+ syslog = OhMyLog::SyslogImplementor.new(hostname: "Staging", priority: 101, tag: "BRAINT")
+ config.syslog = syslog
+ ```
  
 ### Development 
 
