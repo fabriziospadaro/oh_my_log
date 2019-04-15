@@ -1,12 +1,7 @@
 source "https://rubygems.org"
 gemspec
 
-group :active_record do
-  gem 'sqlite3', '~> 1.3.0'
-  gem "rails-observers", "~> 0.1.5"
-end
-
-group :mongoid do
-  gem 'mongoid', ">= 3.0"
-  gem "mongoid-observers"
-end
+gem 'sqlite3', '~> 1.3.0', :require => false
+gem "rails-observers", "~> 0.1.5", :require => false
+gem 'mongoid', ">= 3.0", :require => false
+gem "mongoid-observers", :require => false

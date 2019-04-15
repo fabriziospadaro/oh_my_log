@@ -4,7 +4,6 @@ require 'oh_my_log'
 
 if defined?(Bundler)
   Bundler.require(*Rails.groups(assets: %w[development test]))
-  Bundler.require :default, OHMYLOG_ORM
   require "#{OHMYLOG_ORM}/railtie"
 end
 
