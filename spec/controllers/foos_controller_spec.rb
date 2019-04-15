@@ -63,6 +63,22 @@ RSpec.describe FoosController, type: :controller do
       put :create, params: {name: 'foo name'}
       expect(oml.last_recorded).to eq(nil)
     end
+    it "Should not log a get action if it's blacklisted" do
+      selector = OhMyLog::Log::Selector.new
+      selector.set_methods("EXCEPT" => ["GET"])
+      oml.configuration.reset_selectors
+      oml.configuration.add_selector(selector)
+      get :index
+      expect(oml.last_recorded).to eq(nil)
+    end
+    it "Should log a get action if it's whitelisted" do
+      selector = OhMyLog::Log::Selector.new
+      selector.set_methods("ONLY" => ["GET"])
+      oml.configuration.reset_selectors
+      oml.configuration.add_selector(selector)
+      get :index
+      expect(oml.last_recorded).not_to eq(nil)
+    end
     it "Should be able to correctly use multiple selector" do
       selector = OhMyLog::Log::Selector.new
       selector.set_controllers({"EXCEPT" => ["Foo"]})
