@@ -23,6 +23,10 @@ Gem::Specification.new do |s|
   else
     s.add_runtime_dependency 'railties', '>= 4.2.0', '< 6.0'
   end
+  s.add_development_dependency('sqlite3', '~> 1.3.0')
+  s.add_development_dependency("rails-observers", "~> 0.1.5")
+  s.add_development_dependency('mongoid', ">= 3.0")
+  s.add_development_dependency("mongoid-observers")
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'rubocop', '~> 0.59.2'
   s.add_development_dependency 'bundler'
