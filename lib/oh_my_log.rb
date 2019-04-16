@@ -16,6 +16,7 @@ end
 module OhMyLog
   #call this after you configured the Log Module
   def self.start
+    return unless File.directory?(Rails.root + "app/models/observers/oh_my_log")
     activate
     #the main loop to get callbacks from controllers
     ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
@@ -31,7 +32,6 @@ module OhMyLog
 
   def self.activate
     begin
-      require Rails.root + "config/initializers/oh_my_log_initializer.rb"
       ::OhMyLog::ObserverFactory.activate_observers
     rescue
       return "could not start the gem, did you run oh_my_log:install ?"

@@ -1,6 +1,5 @@
 ENV['RAILS_ENV'] ||= 'test'
 OHMYLOG_ORM = ENV.fetch('OHMYLOG_ORM', 'active_record').to_sym
-
 require 'simplecov'
 SimpleCov.start do
   add_filter 'gemfiles'
