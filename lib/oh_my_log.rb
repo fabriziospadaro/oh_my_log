@@ -49,6 +49,10 @@ module OhMyLog
     p "Successfully destroyed the initializer!"
   end
 
+  def self.test_message(msg)
+    OhMyLog::Log.configuration.log_instance.info(msg)
+  end
+
 end
 
 #load the script to inject code to rails source and create rake task

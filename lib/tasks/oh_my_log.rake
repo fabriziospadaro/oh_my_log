@@ -15,6 +15,12 @@ namespace :oh_my_log do
     OhMyLog.generate_initializer
   end
 
+  desc 'Write a test message int the logger'
+  # in futuro puoi passare direttamente qui alcune impostazioni dell' initialize
+  task test: :environment do
+    OhMyLog.test_message(ENV.fetch('MSG', 'Hello World!'))
+  end
+
   desc 'Install the gem by building initializer and observers'
   task install: :environment do
     Rake::Task['oh_my_log:generate_initializer'].invoke
