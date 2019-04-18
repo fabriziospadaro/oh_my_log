@@ -15,9 +15,7 @@ module RailsApp
 
     config.autoload_paths += ["#{config.root}/app/#{OHMYLOG_ORM}"]
     config.autoload_paths += ["#{config.root}/lib"]
-    config.assets.enabled = true
 
-    config.assets.version = '1.0'
     config.secret_key_base = 'fuuuuuuuuuuu'
   end
 end
