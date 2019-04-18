@@ -6,7 +6,7 @@ module OhMyLog
   class SyslogImplementor
     include "::SyslogProcessors::#{OhMyLog::SyslogConfiguration.processor_name.upcase}".constantize
     attr_accessor :facility, :severity
-    attr_reader :public_ip
+    attr_reader :public_ip, :tag
 
     def initialize(hostname: nil, priority: nil, facility: nil, severity: nil, tag: nil, program_name: "NA", syslog_facility: "Syslog::LOG_LOCAL1")
       @hostname = retrive_hostname
