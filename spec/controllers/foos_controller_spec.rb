@@ -121,6 +121,15 @@ RSpec.describe FoosController, type: :controller do
       expect(oml.last_recorded).not_to eq(nil)
     end
 
+    it "Should split the message bigger than 1024 char whe nusing a syslog" do
+      if Rails::VERSION::MAJOR >= 5
+        put :update, params: {name: "dummy name" * 200, value: 1, id: @dummy.id}
+      else
+        put :update, {name: "dummy name" * 200, value: 1, id: @dummy.id}
+      end
+      expect(oml.last_recorded).not_to eq(nil)
+    end
+
     it "The log created should have a receiver if the action made any changes to the model" do
       if Rails::VERSION::MAJOR >= 5
         put :update, params: {name: "not dummy name", value: 99, id: @dummy.id}

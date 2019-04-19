@@ -1,7 +1,7 @@
 require_relative 'syslog_configuration'
 require 'net/http'
 require 'syslog/logger'
-
+require 'digest'
 module OhMyLog
   class SyslogImplementor
     include "::SyslogProcessors::#{OhMyLog::SyslogConfiguration.processor_name.upcase}".constantize
@@ -26,7 +26,31 @@ module OhMyLog
       SyslogImplementor.new(hostname: @hostname, priority: @priority, facility: @facility, severity: @severity, tag: @tag, program_name: @program_name, syslog_facility: @syslog_facility)
     end
 
+    def print(params)
+      data = [super(params)]
+      if data[0].bytesize >= 1024
+        if OhMyLog::SyslogConfiguration.split_operation == :split
+          message = message_text(ip: params[:ip], user: params[:sender], url: params[:url], m: params[:m], s: params[:s], p: params[:p])
+          data = []
+          priority = priority_text
+          header = header_text(params[:request_time])
+          id = Digest::SHA256.hexdigest(message)
+          base_msg = priority + header + "#{@tag}[ID=#{id}]:"
+          remaining_byte = 1023 - base_msg.bytesize
+          message_chunks = get_binary_chunks(message, remaining_byte)
+          message_chunks.each {|chunk_data| data << base_msg + chunk_data + ";"}
+        else
+          data[0] = get_binary_chunks(data[0], 1021)[0] + "..."
+        end
+      end
+      data
+    end
+
     private
+
+    def get_binary_chunks(string, size)
+      Array.new(((string.length + size - 1) / size)) {|i| string.byteslice(i * size, size)}
+    end
 
     # def override_log_formatter
     #   OhMyLog::Log.configuration.log_instance.formatter = proc do |severity, datetime, progname, msg|

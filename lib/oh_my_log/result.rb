@@ -34,14 +34,10 @@ module OhMyLog
 
       def print_into_log
         if OhMyLog::Log.configuration.syslog
-          data = OhMyLog::Log.configuration.syslog.print(ip: @request.sender, user: @request.sender, url: @request.path, m: @request.method, s: @request.status, p: @request.params, request_time: @request.date)
-          if data.bytesize >= 1024
-            priority = OhMyLog::Log.configuration.syslog.priority_text
-            header = OhMyLog::Log.configuration.syslog.header_text(@request.date)
-            tag = OhMyLog::Log.configuration.syslog.tag
-            data = priority + header + "#{tag}[ERROR]: cannot log the action by #{@request.sender}, body size exceed 1024 bytes;"
+          data = OhMyLog::Log.configuration.syslog.print(ip: OhMyLog::Log.configuration.syslog.public_ip, user: @request.sender, url: @request.path, m: @request.method, s: @request.status, p: @request.params, request_time: @request.date)
+          data.each do |data_info|
+            OhMyLog::Log.configuration.log_instance.info(data_info)
           end
-          OhMyLog::Log.configuration.log_instance.info(data)
         else
           OhMyLog::Log.configuration.log_instance.info('REQUEST')
           OhMyLog::Log.configuration.log_instance.info(@request.to_s)
