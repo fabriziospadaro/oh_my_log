@@ -30,9 +30,9 @@ module OhMyLog
     #TODO no need to pass :ip we can retrieve it from this class
     def print(params)
       data = [super(params)]
-      id = SecureRandom.hex(8)
       if data[0].bytesize >= 1024
         if OhMyLog::SyslogConfiguration.split_operation == :split
+          id = SecureRandom.hex(8)
           message = message_text(ip: params[:ip], user: params[:sender], url: params[:url], m: params[:m], s: params[:s], p: params[:p])
           data = []
           priority = priority_text
