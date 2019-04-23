@@ -121,7 +121,7 @@ RSpec.describe FoosController, type: :controller do
       expect(oml.last_recorded).not_to eq(nil)
     end
 
-    it "Should split the message bigger than 1024 char whe nusing a syslog" do
+    it "Should split the message bigger than 1024 char when using a syslog" do
       if Rails::VERSION::MAJOR >= 5
         put :update, params: {name: "dummy name" * 200, value: 1, id: @dummy.id}
       else

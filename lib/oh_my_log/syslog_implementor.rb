@@ -1,7 +1,8 @@
 require_relative 'syslog_configuration'
 require 'net/http'
 require 'syslog/logger'
-require 'digest'
+require 'securerandom'
+
 module OhMyLog
   class SyslogImplementor
     include "::SyslogProcessors::#{OhMyLog::SyslogConfiguration.processor_name.upcase}".constantize
@@ -29,13 +30,13 @@ module OhMyLog
     #TODO no need to pass :ip we can retrieve it from this class
     def print(params)
       data = [super(params)]
+      id = SecureRandom.hex(8)
       if data[0].bytesize >= 1024
         if OhMyLog::SyslogConfiguration.split_operation == :split
           message = message_text(ip: params[:ip], user: params[:sender], url: params[:url], m: params[:m], s: params[:s], p: params[:p])
           data = []
           priority = priority_text
           header = header_text(params[:request_time])
-          id = Digest::SHA256.hexdigest(message)
           base_msg = priority + header + "#{@tag}[ID=#{id}]:"
           remaining_byte = 1023 - base_msg.bytesize
           message_chunks = get_binary_chunks(message, remaining_byte)
