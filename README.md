@@ -183,10 +183,15 @@ end
 
 ###### Class methods:
 
->processor_name string (the name of the processor in use) 
+>[read only] processor_name string (the name of the processor in use) 
 
->use (processor_name)  (the name of the processor to be used) 
+>[read only] operation string/symbol (the operation to execute when the message is bigger that 1024 byte)
 
+>use (processor_name, operation)  (the name of the processor and the operation to apply) 
+
+>change_processor(processor_name)
+
+>change_operation(operation) (supported operations are: split and trim)
 ---
  
  ### How to configure a syslog ready log:
@@ -194,7 +199,7 @@ end
  
  ```sh
  OhMyLog::SyslogConfiguration.use("RFC3164")
- syslog = OhMyLog::SyslogImplementor.new(hostname: "Staging", priority: 101, tag: "BRAINT")
+ syslog = OhMyLog::SyslogImplementor.new(hostname: "Staging", priority: 101, tag: "HELLO", program_name: "WORLD")
  config.syslog = syslog
  ```
  

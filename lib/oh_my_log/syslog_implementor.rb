@@ -26,6 +26,7 @@ module OhMyLog
       SyslogImplementor.new(hostname: @hostname, priority: @priority, facility: @facility, severity: @severity, tag: @tag, program_name: @program_name, syslog_facility: @syslog_facility)
     end
 
+    #TODO no need to pass :ip we can retrieve it from this class
     def print(params)
       data = [super(params)]
       if data[0].bytesize >= 1024
