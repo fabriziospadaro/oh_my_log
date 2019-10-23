@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   end
   s.add_runtime_dependency 'sqlite3', '~> 1.3.0'
   s.add_runtime_dependency "rails-observers", "~> 0.1.5"
-  s.add_runtime_dependency 'mongoid', ">= 3.0"
+  s.add_runtime_dependency 'mongoid', ">= 4.0"
   s.add_runtime_dependency "mongoid-observers"
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'rubocop', '~> 0.59.2'

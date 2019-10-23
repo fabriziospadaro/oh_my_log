@@ -11,7 +11,7 @@ class Railtie < ::Rails::Railtie
 
   #now let's start our gem(only if there is an initializer) after the rails initialize process
   config.after_initialize do
-    load Rails.root + "app/controllers/application_controller.rb"
+    load Rails.root + "app/controllers/application_controller.rb" unless defined?(ApplicationController)
     class ::ApplicationController
       before_action :get__session__info
 
