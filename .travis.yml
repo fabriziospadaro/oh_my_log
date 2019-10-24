@@ -9,7 +9,7 @@ rvm:
   - 2.4.0
   - 2.5.0
   - 2.6.0
-  - ruby-head
+  #- ruby-head
 env:
   matrix:
     - OHMYLOG_ORM=active_record
