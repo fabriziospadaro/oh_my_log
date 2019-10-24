@@ -11,7 +11,7 @@ module SyslogProcessors
     def message_text(ip:, user:, url:, m:, s:, p:)
       text = "#{@tag.upcase}:"
       text += "ip=#{ip};"
-      text += "u=#{user};"
+      text += "u=#{PrintableUser.new(user, OhMyLog::Log.configuration.user_fields) rescue "anonymous"};"
       text += "url=#{url};"
       text += "m=#{m};"
       text += "s=#{s};"

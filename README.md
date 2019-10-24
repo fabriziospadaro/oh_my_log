@@ -64,6 +64,8 @@ bundle exec rake oh_my_log:generate_observers
 
 >selectors Selector[] (instance list of all the selectors)
 
+>user_fields String[]/Symbol[] (fallback fields used to log an user)
+
 ###### Instance methods:
 
 >add_selector(selector ->Selector) (use this to add a new selector inside the configuration,
@@ -114,6 +116,7 @@ OhMyLog::Log.configure do |config|
   selector.set_status_codes("ONLY" =>[(0..200)])
   selector.set_methods("EXCEPT" =>["GET"])
   selector.set_ips("EXCEPT"=>["192.168.0.1"])
+  config.user_fields = ["email", "full_name"]
   config.add_selector(selector)
   #put your configs here
 end

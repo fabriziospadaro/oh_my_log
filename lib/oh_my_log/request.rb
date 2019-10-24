@@ -14,7 +14,7 @@ module OhMyLog
       end
 
       def to_s
-        user_info = @sender.email rescue nil
+        user_info = PrintableUser.new(@sender, OhMyLog::Log.configuration.user_fields) rescue nil
         sender = user_info || Thread.current["remote_ip"]
         "#{@date}, #{sender}, #{@method}, #{@params}, #{@status}"
       end
