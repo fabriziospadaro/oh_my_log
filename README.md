@@ -111,7 +111,7 @@ Complex initializer example:
 OhMyLog::Log.configure do |config|
   config.print_log = true
   selector = OhMyLog::Log::Selector.new
-  selector.set_controllers("EXCEPT" =>["ApplicationController"])
+  selector.set_controllers("EXCEPT" =>["Application","Hotel"])
   selector.set_actions("ONLY" =>["index","create","destroy"])
   selector.set_status_codes("ONLY" =>[(0..200)])
   selector.set_methods("EXCEPT" =>["GET"])

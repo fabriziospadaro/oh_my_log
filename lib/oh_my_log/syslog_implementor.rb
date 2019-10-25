@@ -61,7 +61,11 @@ module OhMyLog
     # end
 
     def retrive_public_ip
-      Net::HTTP.get(URI("http://checkip.amazonaws.com")).gsub("\n", "") rescue nil
+      if Rails.env.test?
+        "127.0.0.1"
+      else
+        Net::HTTP.get(URI("http://checkip.amazonaws.com")).gsub("\n", "") rescue nil
+      end
     end
 
     def retrive_hostname
