@@ -31,7 +31,7 @@ module OhMyLog
     def print(params)
       data = [super(params)]
       if data[0].bytesize >= 1024
-        if OhMyLog::SyslogConfiguration.split_operation == :split
+        if OhMyLog::SyslogConfiguration.split_operation.to_sym == :split
           id = SecureRandom.hex(8)
           message = message_text(ip: params[:ip], user: params[:sender], url: params[:url], m: params[:m], s: params[:s], p: params[:p])
           data = []
@@ -51,7 +51,35 @@ module OhMyLog
     private
 
     def get_binary_chunks(string, size)
-      Array.new(((string.length + size - 1) / size)) {|i| string.byteslice(i * size, size)}
+      remaining_string = string
+      binary_chunks = []
+      until remaining_string.empty?
+        chunk = limit_bytesize(remaining_string, size)
+        binary_chunks << chunk
+        remaining_string = remaining_string[chunk.size..remaining_string.size]
+      end
+      binary_chunks
+    end
+
+    # https://stackoverflow.com/questions/12536080/ruby-limiting-a-utf-8-string-by-byte-length
+    def limit_bytesize(str, size)
+      str.encoding.name == 'UTF-8' or raise ArgumentError, "str must have UTF-8 encoding"
+
+      # Change to canonical unicode form (compose any decomposed characters).
+      # Works only if you're using active_support
+      str = str.mb_chars.compose.to_s if str.respond_to?(:mb_chars)
+
+      # Start with a string of the correct byte size, but
+      # with a possibly incomplete char at the end.
+      new_str = str.byteslice(0, size)
+
+      # We need to force_encoding from utf-8 to utf-8 so ruby will re-validate
+      # (idea from halfelf).
+      until new_str[-1].force_encoding('utf-8').valid_encoding?
+        # remove the invalid char
+        new_str = new_str.slice(0..-2)
+      end
+      new_str
     end
 
     # def override_log_formatter

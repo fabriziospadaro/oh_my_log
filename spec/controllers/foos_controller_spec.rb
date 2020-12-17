@@ -90,9 +90,11 @@ RSpec.describe FoosController, type: :controller do
 
   context "When testing the event logger for a generic Model" do
     before(:all) do
+      Rake::Task['oh_my_log:install'].invoke
       Foo.destroy_all
       Doo.destroy_all
       @dummy = Foo.create(name: "Dummy model", value: 2)
+      OhMyLog.start
     end
     before(:each) do
       oml.reset
@@ -122,10 +124,11 @@ RSpec.describe FoosController, type: :controller do
     end
 
     it "Should split the message bigger than 1024 char when using a syslog" do
+      emoji_content = 'START OF EMOJI' + "😊" * 1020 + "😞😞😞😞" + '1024' + "😷" * 1024 + '2048' + "😂" * 1024 + 'END OF EMOJI'
       if Rails::VERSION::MAJOR >= 5
-        put :update, params: {name: "dummy name" * 200, value: 1, id: @dummy.id}
+        put :update, params: {name: emoji_content, value: 1, id: @dummy.id}
       else
-        put :update, {name: "dummy name" * 200, value: 1, id: @dummy.id}
+        put :update, {name: emoji_content, value: 1, id: @dummy.id}
       end
       expect(oml.last_recorded).not_to eq(nil)
     end
